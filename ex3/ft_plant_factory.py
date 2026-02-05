@@ -4,7 +4,7 @@ class Plant:
     name: str
     height: int
     age_days: int
-    growth_rate: int
+    growth_rate: float
 
     def __init__(self, name: str, height: int, age: int, gowth_rate: int):
         if (name == "" or height < 0 or age < 0 or gowth_rate < 0):
