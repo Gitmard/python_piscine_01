@@ -31,15 +31,35 @@ class Plant:
         self.height += amount * self.growth_rate
 
 
+class PlantFactory:
+
+    def create_plant(self, name: str, height: float, age: int,
+                     growth_rate: float) -> Plant:
+        return Plant(name, height, age, growth_rate)
+
+    def update_name(self, plant: Plant, name: str) -> None:
+        plant.set_name(name)
+
+    def update_height(self, plant: Plant, height: float) -> None:
+        plant.set_height(height)
+
+    def update_age(self, plant: Plant, age: int) -> None:
+        plant.set_age(age)
+
+    def update_growth_rate(self, plant: Plant, growth_rate: float) -> None:
+        plant.set_growth_rate(growth_rate)
+
+
 def main():
     plants: list[Plant] = []
+    plant_factory = PlantFactory()
     plants_counter = 0
 
-    plants.append(Plant("Rose", 12, 25, 2))
-    plants.append(Plant("Iris", 18, 19, 1))
-    plants.append(Plant("Lily of the valley", 9, 12, 0.5))
-    plants.append(Plant("Primrose", 3, 9, 0.3))
-    plants.append(Plant("Orchidae", 39, 69, 1.2))
+    plants.append(plant_factory.create_plant("Rose", 12, 25, 2))
+    plants.append(plant_factory.create_plant("Iris", 18, 19, 1))
+    plants.append(plant_factory.create_plant("Lily of the valley", 9, 12, 0.5))
+    plants.append(plant_factory.create_plant("Primrose", 3, 9, 0.3))
+    plants.append(plant_factory.create_plant("Orchidae", 39, 69, 1.2))
 
     print("=== Plant factory Output ===")
     for plant in plants:
