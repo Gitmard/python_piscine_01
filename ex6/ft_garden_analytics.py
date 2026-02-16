@@ -513,6 +513,7 @@ class GardenManager:
             cls.__print_garden_scores(gardens)
             print(f"Total gardens managed: {len(gardens)}")
 
+
 def main():
     simards_garden: Garden
     garden_manager = GardenManager({})
@@ -582,6 +583,7 @@ def main():
     garden_manager.print_garden_stats(simards_garden)
     print("")
     garden_manager.print_garden_stats(jean_phils_garden)
+
 
 if __name__ == "__main__":
     main()
