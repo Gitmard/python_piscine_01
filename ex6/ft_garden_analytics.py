@@ -490,7 +490,7 @@ class GardenManager:
                 scores[gardener_name] = 0
                 for garden in gardens[gardener_name]:
                     scores[gardener_name] += garden.get_score()
-            for name, score in scores.items():
+            for name, _ in scores.items():
                 garden_scores_str += f"{name}: {scores[name]}"
                 if i < len(scores) - 1:
                     garden_scores_str += ", "
