@@ -13,7 +13,7 @@ class Plant:
             height: float,
             age: int,
             growth_rate: float
-    ):
+    ) -> None:
         self.set_name(name.capitalize())
         self.set_height(height)
         self.set_age(age)
@@ -49,7 +49,7 @@ class Plant:
     def grow(self, amount: int = 1) -> None:
         self.set_height(self.get_height() + amount * self.get_growth_rate())
 
-    def to_string(self):
+    def to_string(self) -> str:
         return (
             f"{self.get_name()}" +
             f"({self.get_height()}cm, " +
@@ -72,7 +72,7 @@ class FloweringPlant(Plant):
             age: int,
             growth_rate: float,
             color: str
-    ):
+    ) -> None:
         super().__init__(name, height, age, growth_rate)
         self.set_color(color)
 
@@ -82,7 +82,7 @@ class FloweringPlant(Plant):
     def set_color(self, color: str) -> None:
         self.__color = color
 
-    def to_string(self):
+    def to_string(self) -> str:
         return (
             f"{self.get_name()}" +
             f"({self.get_height()}cm, " +
@@ -104,7 +104,7 @@ class PrizeFlower(FloweringPlant):
             growth_rate: float,
             color: str,
             prize_points: int
-    ):
+    ) -> None:
         super().__init__(name, height, age, growth_rate, color)
         self.set_prize_points(prize_points)
 
@@ -114,7 +114,7 @@ class PrizeFlower(FloweringPlant):
     def set_prize_points(self, prize_points: int) -> None:
         self.__prize_points = prize_points
 
-    def to_string(self):
+    def to_string(self) -> str:
         return (
             f"{self.get_name()}" +
             f"({self.get_height()}cm, " +
@@ -133,8 +133,12 @@ class GardenSecuritySystem:
         print(f"[GardenSecuritySystem] {message}")
 
     @classmethod
-    def check_string_attribute(cls, value: str, name: str,
-                               allow_empty_string: bool = False) -> bool:
+    def check_string_attribute(
+        cls,
+        value: str,
+        name: str,
+        allow_empty_string: bool = False
+    ) -> bool:
         instance_ok = isinstance(value, str)
         value_ok = allow_empty_string or value != ""
         if not instance_ok:
@@ -144,8 +148,12 @@ class GardenSecuritySystem:
         return instance_ok and value_ok
 
     @classmethod
-    def check_int_attibute(cls, value: int, name: str, allow_negative: bool =
-                           False) -> bool:
+    def check_int_attibute(
+        cls,
+        value: int,
+        name: str,
+        allow_negative: bool = False
+    ) -> bool:
         instance_ok = isinstance(value, int)
         value_ok = allow_negative or value >= 0
         if not instance_ok:
@@ -155,8 +163,12 @@ class GardenSecuritySystem:
         return instance_ok and value_ok
 
     @classmethod
-    def check_float_attribute(cls, value: float, name: str,
-                              allow_negative: bool = False) -> bool:
+    def check_float_attribute(
+        cls,
+        value: float,
+        name: str,
+        allow_negative: bool = False
+    ) -> bool:
         instance_ok = isinstance(value, float) or isinstance(value, int)
         value_ok = allow_negative or value >= 0
         if not instance_ok:
@@ -196,10 +208,7 @@ class GardenSecuritySystem:
 class PlantFactory:
 
     @classmethod
-    def log(
-            cls,
-            message: str
-    ) -> None:
+    def log(cls, message: str) -> None:
         print(f"[PlantFactory] {message}")
 
     @classmethod
@@ -267,11 +276,7 @@ class PlantFactory:
         return None
 
     @classmethod
-    def update_name(
-            cls,
-            plant: Plant,
-            name: str
-    ) -> bool:
+    def update_name(cls, plant: Plant, name: str) -> bool:
         if not GardenSecuritySystem.check_string_attribute(name, "name"):
             cls.log(
                 f"Invalid operation attempted: name {name}" +
@@ -283,11 +288,7 @@ class PlantFactory:
         return True
 
     @classmethod
-    def update_height(
-            cls,
-            plant: Plant,
-            height: float
-    ) -> bool:
+    def update_height(cls, plant: Plant, height: float) -> bool:
         if not GardenSecuritySystem.check_float_attribute(height, "height"):
             cls.log(
                 f"Invalid operation attempted: height {height}cm" +
@@ -299,11 +300,7 @@ class PlantFactory:
         return True
 
     @classmethod
-    def update_age(
-            cls,
-            plant: Plant,
-            age: int
-    ) -> bool:
+    def update_age(cls, plant: Plant, age: int) -> bool:
         if not GardenSecuritySystem.check_int_attibute(age, "age"):
             cls.log(f"Invalid operation attempted: age {age}")
             return False
@@ -312,18 +309,15 @@ class PlantFactory:
         return True
 
     @classmethod
-    def update_growth_rate(
-            cls,
-            plant: Plant,
-            growth_rate: float
-    ) -> bool:
+    def update_growth_rate(cls, plant: Plant, growth_rate: float) -> bool:
         if not GardenSecuritySystem.check_float_attribute(
                 growth_rate,
                 "growth rate"
         ):
             cls.log(
                 f"Invalid operation attempted: growth rate {growth_rate}/day" +
-                "[REJECTED]")
+                "[REJECTED]"
+            )
             return False
         plant.set_growth_rate(growth_rate)
         cls.log(f"Growth rate updated: {growth_rate}cm/day [OK]")
@@ -333,7 +327,7 @@ class PlantFactory:
 class Gardener:
     __name: str
 
-    def __init__(self, name: str):
+    def __init__(self, name: str) -> None:
         self.set_name(name)
 
     def get_name(self) -> str:
@@ -349,10 +343,7 @@ class Garden:
     __score: int
     __total_growth: float
 
-    def __init__(
-            self,
-            gardener: Gardener
-    ):
+    def __init__(self, gardener: Gardener) -> None:
         self.set_gardener(gardener)
         self.__plants = []
         self.__score = 0
@@ -407,8 +398,26 @@ class Garden:
 class GardenManager:
     __gardens: dict[str, list[Garden]]
 
-    def __init__(self, gardens: dict[str, list[Garden]]):
+    def __init__(self, gardens: dict[str, list[Garden]] = None) -> None:
+        if gardens is None:
+            gardens = {}
         self.__gardens = gardens
+
+    @classmethod
+    def create_garden_network(
+        cls,
+        simards_plants: list[Plant],
+        jean_phils_plants: list[Plant]
+    ) -> "GardenManager":
+        garden_manager = cls()
+        simards_garden = garden_manager.create_garden("Simard")
+        jean_phils_garden = garden_manager.create_garden("Jean Phil Monslip")
+
+        for plant in simards_plants:
+            simards_garden.add_plant(plant)
+        for plant in jean_phils_plants:
+            jean_phils_garden.add_plant(plant)
+        return garden_manager
 
     def get_gardens(self) -> dict[str, list[Garden]]:
         return self.__gardens
@@ -441,43 +450,46 @@ class GardenManager:
 
         @staticmethod
         def __print_garden_specific_stats(garden: Garden) -> None:
-            garden_counters: dict[str, int] = {
-                "regular": 0,
-                "flowering": 0,
-                "prize": 0
-            }
+            regular_counter = 0
+            flowering_counter = 0
+            prize_counter = 0
 
             for plant in garden.get_plants():
                 if isinstance(plant, PrizeFlower):
                     print(
-                        f"{plant.get_name()}:",
+                        f"- {plant.get_name()}:",
                         f"{plant.get_height()}cm,",
                         f"{plant.get_age()}days,",
                         f"{plant.get_growth_rate()}cm/day,",
                         f"{plant.get_color()} flowers (blooming),",
                         f"Prize points: {plant.get_prize_points()}",
                     )
-                    garden_counters["regular"] += 1
+                    regular_counter += 1
                 elif isinstance(plant, FloweringPlant):
                     print(
-                        f"{plant.get_name()}:",
+                        f"- {plant.get_name()}:",
                         f"{plant.get_height()}cm,",
                         f"{plant.get_age()}days,",
                         f"{plant.get_growth_rate()}cm/day,",
                         f"{plant.get_color()} flowers (blooming)"
                     )
-                    garden_counters["flowering"] += 1
+                    flowering_counter += 1
                 elif isinstance(plant, Plant):
                     print(
-                        f"{plant.get_name()}:",
+                        f"- {plant.get_name()}:",
                         f"{plant.get_height()}cm,",
                         f"{plant.get_age()}days,",
                         f"{plant.get_growth_rate()}cm/day"
                     )
-                    garden_counters["prize"] += 1
+                    prize_counter += 1
             print(
-                f"Plants added: {len(garden.get_plants())}, ",
-                f"Total growth: {garden.get_total_growth()}"
+                f"\nPlants added: {len(garden.get_plants())},",
+                f"Total growth: {garden.get_total_growth()}cm"
+            )
+            print(
+                f"Plant types: {regular_counter} regular, "
+                + f"{flowering_counter} flowering, " +
+                f"{prize_counter} prize flower, "
             )
 
         @staticmethod
@@ -503,6 +515,7 @@ class GardenManager:
                 garden: Garden,
                 gardens: dict[str, list[Garden]]
         ) -> None:
+            height_validation = True
             print(
                 f"=== {garden.get_gardener().get_name().capitalize()}'s",
                 "Garden Report ==="
@@ -510,11 +523,19 @@ class GardenManager:
             print("Plants in garden :")
             cls.__print_garden_specific_stats(garden)
             print("")
+            for plant in garden.get_plants():
+                if not GardenSecuritySystem.check_float_attribute(
+                    plant.get_height(),
+                    "height"
+                ):
+                    height_validation = False
+                    break
+            print(f"Height validation test: {height_validation}")
             cls.__print_garden_scores(gardens)
             print(f"Total gardens managed: {len(gardens)}")
 
 
-def main():
+def main() -> None:
     simards_garden: Garden
     garden_manager = GardenManager({})
     simards_plants: list[Plant] = [
@@ -568,13 +589,14 @@ def main():
     ]
     print("=== Garden Management System Demo ===\n")
 
-    simards_garden = garden_manager.create_garden("Simard")
-    jean_phils_garden = garden_manager.create_garden("Jean Phil Monslip")
-
-    for plant in simards_plants:
-        simards_garden.add_plant(plant)
-    for plant in jean_phils_plants:
-        jean_phils_garden.add_plant(plant)
+    garden_manager = GardenManager.create_garden_network(
+        simards_plants,
+        jean_phils_plants
+    )
+    simards_garden = garden_manager.get_gardens().get("Simard")[0]
+    jean_phils_garden = garden_manager.get_gardens().get(
+        "Jean Phil Monslip"
+    )[0]
     print("")
     GardenManager.grow_garden(simards_garden)
     print("")

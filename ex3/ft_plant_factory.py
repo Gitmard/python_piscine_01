@@ -6,7 +6,13 @@ class Plant:
     age_days: int
     growth_rate: float
 
-    def __init__(self, name: str, height: int, age: int, gowth_rate: int):
+    def __init__(
+        self,
+        name: str,
+        height: int,
+        age: int,
+        gowth_rate: int
+    ) -> None:
         if (name == "" or height < 0 or age < 0 or gowth_rate < 0):
             print("Error: invalid parameters")
             return
@@ -16,15 +22,15 @@ class Plant:
         self.growth_rate = gowth_rate
 
     def print_info(self) -> None:
-        print(f"{self.name}: {self.height}cm, {self.age_days} days old")
+        print(f"{self.name} ({self.height}cm, {self.age_days} days)")
 
-    def age(self, amount: int = 1):
+    def age(self, amount: int = 1) -> None:
         if (amount < 0):
             print("Error: Plant can not age a negative amount")
         self.age_days += amount
         self.grow(amount)
 
-    def grow(self, amount: int = 1):
+    def grow(self, amount: int = 1) -> None:
         if (amount < 0):
             print("Error: Plant can not grow a negative amount")
             return
@@ -33,8 +39,12 @@ class Plant:
 
 class PlantFactory:
 
-    def create_plant(self, name: str, height: float, age: int,
-                     growth_rate: float) -> Plant:
+    def create_plant(
+        self, name: str,
+        height: float,
+        age: int,
+        growth_rate: float
+    ) -> Plant:
         return Plant(name, height, age, growth_rate)
 
     def update_name(self, plant: Plant, name: str) -> None:
@@ -50,7 +60,7 @@ class PlantFactory:
         plant.set_growth_rate(growth_rate)
 
 
-def main():
+def main() -> None:
     plants: list[Plant] = []
     plant_factory = PlantFactory()
     plants_counter = 0

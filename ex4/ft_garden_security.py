@@ -7,7 +7,13 @@ class Plant:
     __age: int
     __growth_rate: float
 
-    def __init__(self, name: str, height: float, age: int, gowth_rate: int):
+    def __init__(
+        self,
+        name: str,
+        height: float,
+        age: int,
+        gowth_rate: int
+    ) -> None:
         self.set_name(name.capitalize())
         self.set_height(height)
         self.set_age(age)
@@ -43,12 +49,14 @@ class Plant:
     def grow(self, amount: int = 1) -> None:
         self.set_height(self.get_height() + amount * self.get_growth_rate())
 
-    def print_info(self) -> None:
-        print(f"{self.__name}: {self.__height}cm, {self.__age} days old")
+    def to_string(self) -> str:
+        return (
+            f"{self.get_name()} ({self.get_height()}cm, {self.get_age()}" +
+            f" days, {self.get_growth_rate()} cm/day)"
+        )
 
-    def to_string(self):
-        print(f"{self.get_name()} ({self.get_height()}cm, {self.get_age()} \
-days, {self.get_growth_rate()} cm/day)")
+    def print_info(self) -> None:
+        print(self.to_string())
 
 
 class GardenSecuritySystem:
@@ -82,9 +90,14 @@ class GardenSecuritySystem:
             self.log("Negative age rejected")
         return instance_ok and value_ok
 
-    def check_growth_rate(self, growth_rate: float) -> bool:
-        instance_ok = isinstance(growth_rate, float) or isinstance(growth_rate,
-                                                                   int)
+    def check_growth_rate(
+        self,
+        growth_rate: float
+    ) -> bool:
+        instance_ok = (
+            isinstance(growth_rate, float)
+            or isinstance(growth_rate, int)
+        )
         value_ok = growth_rate >= 0
         if not instance_ok:
             self.log("Non float growth rate rejected")
@@ -92,7 +105,7 @@ class GardenSecuritySystem:
             self.log("Negative growth rate rejected")
         return instance_ok and value_ok
 
-    def check_plant(self, plant: Plant):
+    def check_plant(self, plant: Plant) -> bool:
         if not self.check_name(plant.get_name()):
             return False
         if not self.check_height(plant.get_height()):
@@ -107,14 +120,19 @@ class GardenSecuritySystem:
 class PlantFactory:
     __garden_security_system: GardenSecuritySystem
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.__garden_security_system = GardenSecuritySystem()
 
     def log(self, message: str) -> None:
         print(f"[PlantFactory] {message}")
 
-    def create_plant(self, name: str, height: float, age: int,
-                     growth_rate: float) -> Plant | None:
+    def create_plant(
+        self,
+        name: str,
+        height: float,
+        age: int,
+        growth_rate: float
+    ) -> Plant | None:
         new_plant = Plant(name, height, age, growth_rate)
         if self.__garden_security_system.check_plant(new_plant):
             self.log(f"Plant created: {new_plant.get_name()}")
@@ -157,21 +175,19 @@ class PlantFactory:
         return True
 
 
-def main():
-    print("=== Garden Security System ===")
+def main() -> None:
+    print("=== Garden Security System ===\n")
     plant: Plant
     plant_factory = PlantFactory()
 
-    print("\n")
     plant = plant_factory.create_plant("Rose", 12, 8, 0.25)
-    plant_factory.update_age(plant, 12)
-    plant_factory.update_height(plant, 54)
+    plant_factory.update_height(plant, 25)
+    plant_factory.update_age(plant, 30)
 
-    print("\n")
-    plant_factory.update_name(plant, 12)
-    plant_factory.update_age(plant, -42)
+    print("")
+    plant_factory.update_age(plant, -5)
 
-    print("\n")
+    print("")
     print(f"Current plant: {plant.to_string()}")
 
 

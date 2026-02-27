@@ -1,13 +1,18 @@
 #!/usr/bin/python3
 
-
 class Plant:
     __name: str
     __height: float
     __age: int
     __growth_rate: float
 
-    def __init__(self, name: str, height: float, age: int, gowth_rate: int):
+    def __init__(
+        self,
+        name: str,
+        height: float,
+        age: int,
+        gowth_rate: int
+    ) -> None:
         self.set_name(name.capitalize())
         self.set_height(height)
         self.set_age(age)
@@ -43,9 +48,11 @@ class Plant:
     def grow(self, amount: int = 1) -> None:
         self.set_height(self.get_height() + amount * self.get_growth_rate())
 
-    def to_string(self):
-        print(f"{self.get_name()} ({self.get_height()}cm, {self.get_age()} \
-days, {self.get_growth_rate()} cm/day)")
+    def to_string(self) -> str:
+        return (
+            f"{self.get_name()} ({self.get_height()}cm, {self.get_age()}" +
+            f"days, {self.get_growth_rate()} cm/day)"
+        )
 
     def print_infos(self) -> None:
         print(self.to_string())
@@ -54,8 +61,14 @@ days, {self.get_growth_rate()} cm/day)")
 class Flower(Plant):
     __color: str
 
-    def __init__(self, name: str, height: float, age: int, growth_rate: float,
-                 color: str):
+    def __init__(
+        self,
+        name: str,
+        height: float,
+        age: int,
+        growth_rate: float,
+        color: str
+    ) -> None:
         super().__init__(name, height, age, growth_rate)
         self.set_color(color)
 
@@ -70,34 +83,52 @@ class Flower(Plant):
 
     def to_string(self) -> str:
         return (
-            f"{self.get_name()} (Flower): \
-{self.get_height()}cm, {self.get_age()} days, {self.get_growth_rate()} \
-cm/day, {self.get_color()} color"
+            f"{self.get_name()} (Flower): " +
+            f"{self.get_height()}cm, {self.get_age()} days, " +
+            f"{self.get_growth_rate()} cm/day, {self.get_color()} color"
         )
 
 
 class Tree(Plant):
     __trunk_diameter: int
+    __shade_area: int
 
-    def __init__(self, name: str, height: float, age: int, growth_rate: float,
-                 trunk_diameter: int):
+    def __init__(
+        self,
+        name: str,
+        height: float,
+        age: int,
+        growth_rate: float,
+        trunk_diameter: int,
+        shade_area: int
+    ) -> None:
         super().__init__(name, height, age, growth_rate)
         self.set_trunk_diameter(trunk_diameter)
+        self.set_shade_area(shade_area)
 
     def get_trunk_diameter(self) -> int:
         return self.__trunk_diameter
 
+    def get_shade_area(self) -> int:
+        return self.__shade_area
+
     def set_trunk_diameter(self, trunk_diameter: int) -> None:
         self.__trunk_diameter = trunk_diameter
 
-    def produce_shade(self) -> None:
-        print(f"{self.get_name()} produces a soothing shade")
+    def set_shade_area(self, shade_area: int) -> None:
+        self.__shade_area = shade_area
 
-    def to_string(self):
+    def produce_shade(self) -> None:
+        print(
+            f"{self.get_name()} provides {self.get_shade_area()} " +
+            "square meters of shade"
+        )
+
+    def to_string(self) -> str:
         return (
-                f"{self.get_name()} (Tree): {self.get_height()}cm, \
-{self.get_age()} days, {self.get_growth_rate()} cm/day, \
-{self.get_trunk_diameter()}cm diameter"
+            f"{self.get_name()} (Tree): {self.get_height()}cm, " +
+            f"{self.get_age()} days, {self.get_growth_rate()} cm/day, " +
+            f"{self.get_trunk_diameter()}cm diameter"
         )
 
 
@@ -105,8 +136,15 @@ class Vegetable(Plant):
     __harvest_season: str
     __nutritional_value: str
 
-    def __init__(self, name: str, height: float, age: int, growth_rate: float,
-                 harvest_season: str, nutritional_value: str):
+    def __init__(
+        self,
+        name: str,
+        height: float,
+        age: int,
+        growth_rate: float,
+        harvest_season: str,
+        nutritional_value: str
+    ) -> None:
         super().__init__(name, height, age, growth_rate)
         self.set_harvest_season(harvest_season)
         self.set_nutritional_value(nutritional_value)
@@ -124,20 +162,19 @@ class Vegetable(Plant):
         self.__nutritional_value = nutritional_value
 
     def give_nutritional_value(self) -> None:
-        print(f"{self.get_name()} is rich in \
-{self.get_nutritional_value()}")
+        print(f"{self.get_name()} is rich in {self.get_nutritional_value()}")
 
     def to_string(self) -> str:
         return (
-            f"{self.get_name()} (Vegetable): {self.get_height()}cm, \
-{self.get_age()} days, {self.get_growth_rate()} cm/day, \
-{self.get_harvest_season()} harvest"
+            f"{self.get_name()} (Vegetable): {self.get_height()}cm, " +
+            f"{self.get_age()} days, {self.get_growth_rate()} cm/day, " +
+            f"{self.get_harvest_season()} harvest"
         )
 
 
-def main():
-    oak = Tree("Oak", 534, 32485, 2, 54)
-    birch = Tree("Birch", 321, 11680, 1.3, 32)
+def main() -> None:
+    oak = Tree("Oak", 534, 32485, 2, 54, 78)
+    birch = Tree("Birch", 321, 11680, 1.3, 32, 42)
     rose = Flower("Rose", 12, 24, 0.3, "white")
     iris = Flower("Iris", 19, 21, 0.8, "Pink")
     carrot = Vegetable("Carrot", 8, 12, .25, "Winter", "Fiber")

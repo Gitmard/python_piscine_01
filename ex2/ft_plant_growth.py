@@ -6,7 +6,13 @@ class Plant:
     age_days: int
     growth_rate: int
 
-    def __init__(self, name: str, height: int, age: int, gowth_rate: int):
+    def __init__(
+        self,
+        name: str,
+        height: int,
+        age: int,
+        gowth_rate: int = 1
+    ) -> None:
         if (name == "" or height < 0 or age < 0 or gowth_rate < 0):
             print("Error: invalid parameters")
             return
@@ -15,28 +21,34 @@ class Plant:
         self.age_days = age
         self.growth_rate = gowth_rate
 
-    def print_info(self) -> None:
-        print(f"{self.name}: {self.height}cm, {self.age_days} days old")
-
-    def age(self, amount: int = 1):
+    def age(self, amount: int = 1) -> None:
         if (amount < 0):
             print("Error: Plant can not age a negative amount")
         self.age_days += amount
         self.grow(amount)
 
-    def grow(self, amount: int = 1):
+    def grow(self, amount: int = 1) -> None:
         if (amount < 0):
             print("Error: Plant can not grow a negative amount")
             return
         self.height += amount * self.growth_rate
 
+    def to_string(self) -> str:
+        return f"{self.name}: {self.height}cm, {self.age_days} days old"
 
-def main():
-    plant = Plant("Rose", 24, 16, 1)
+    def get_info(self):
+        return self.to_string()
+
+    def print_info(self) -> None:
+        print(self.get_info())
+
+
+def main() -> None:
+    plant = Plant("Rose", 24, 16)
     plant_old_height = plant.height
     print("=== Day 1 ===")
     plant.print_info()
-    for i in range(7):
+    for _ in range(7):
         plant.age()
     print("== Day 7 ==")
     plant.print_info()
